@@ -13,6 +13,9 @@ fn main() {
     let lines = reader.lines().collect::<Vec<_>>();
     let mut horizontal = 0;
     let mut vertical = 0;
+    let mut aim = 0;
+
+    let mut depth = 0;
 
     for (index, line) in lines.iter().enumerate() {
         // Split by direction and number
@@ -22,12 +25,22 @@ fn main() {
         let steps: i32 = split[1].parse().unwrap();
 
         match direction {
-            FORWARD => horizontal = horizontal + steps,
-            DOWN => vertical = vertical + steps,
-            UP => vertical = vertical - steps,
+            FORWARD => {
+                horizontal = horizontal + steps;
+                depth = depth + (aim * steps);
+            }
+            DOWN => {
+                vertical = vertical + steps;
+                aim += steps;
+            }
+            UP => {
+                vertical = vertical - steps;
+                aim -= steps;
+            }
             _ => {}
         }
     }
 
     println!("Part one solution is: {}", horizontal * vertical);
+    println!("Part two solution is: {}", horizontal * depth);
 }
