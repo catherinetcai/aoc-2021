@@ -28,7 +28,7 @@ fn main() {
     let mut rolling_sum_counter = 0;
     let mut prev_rolling_sum = 0;
 
-    for (index, line) in lines.iter().enumerate().step_by(3) {
+    for (index, line) in lines.iter().enumerate() {
         if index == 0 {
             prev_rolling_sum = line.as_ref().unwrap().parse::<i32>().unwrap()
                 + lines[index + 1].as_ref().unwrap().parse::<i32>().unwrap()
@@ -45,6 +45,10 @@ fn main() {
             + lines[index + 1].as_ref().unwrap().parse::<i32>().unwrap()
             + lines[index + 2].as_ref().unwrap().parse::<i32>().unwrap();
 
+        println!(
+            "Previous rolling sum: {}, current sum: {}",
+            prev_rolling_sum, current_sum
+        );
         if prev_rolling_sum < current_sum {
             rolling_sum_counter += 1;
         }
