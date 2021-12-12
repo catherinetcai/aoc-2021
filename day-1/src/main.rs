@@ -25,5 +25,33 @@ fn main() {
         prev = current;
     }
 
-    println!("Number increased: {}", counter);
+    let mut rolling_sum_counter = 0;
+    let mut prev_rolling_sum = 0;
+
+    for (index, line) in lines.iter().enumerate().step_by(3) {
+        if index == 0 {
+            prev_rolling_sum = line.as_ref().unwrap().parse::<i32>().unwrap()
+                + lines[index + 1].as_ref().unwrap().parse::<i32>().unwrap()
+                + lines[index + 2].as_ref().unwrap().parse::<i32>().unwrap();
+            continue;
+        }
+
+        // Break if we cannot handle another rolling sum
+        if index + 3 > lines.len() {
+            break;
+        }
+
+        let current_sum = line.as_ref().unwrap().parse::<i32>().unwrap()
+            + lines[index + 1].as_ref().unwrap().parse::<i32>().unwrap()
+            + lines[index + 2].as_ref().unwrap().parse::<i32>().unwrap();
+
+        if prev_rolling_sum < current_sum {
+            rolling_sum_counter += 1;
+        }
+
+        prev_rolling_sum = current_sum;
+    }
+
+    println!("Part 1 number increased: {}", counter);
+    println!("Part 2 number increased: {}", rolling_sum_counter);
 }
